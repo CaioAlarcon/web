@@ -35,3 +35,4 @@ service apache2 restart
 # Output
 WPVER=$(grep "wp_version = " /var/www/html/wp-includes/version.php |awk -F\' '{print $2}')
 echo -e "\nWordPress version $WPVER is successfully installed!"
+echo "Agora, antes de instalar o WP, muda a config do PHP para aumentar o upload e o POST
