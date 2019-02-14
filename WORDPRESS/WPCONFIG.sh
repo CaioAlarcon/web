@@ -33,6 +33,9 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 a2ensite html
 chown www-data:www-data /var/www/html
 chmod -R  777 /var/www/html
+echo "max_execution_time = 300" >> /etc/php/7.0/apache2/php.ini 
+echo "post_max_size = 2G" >> /etc/php/7.0/apache2/php.ini 
+echo "upload_max_filesize = 2G" >> /etc/php/7.0/apache2/php.ini 
 service apache2 restart
 # Output
 WPVER=$(grep "wp_version = " /var/www/html/wp-includes/version.php |awk -F\' '{print $2}')
