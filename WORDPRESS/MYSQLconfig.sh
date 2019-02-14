@@ -12,28 +12,26 @@ echo "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost';" | mysql -u ro
 echo "FLUSH PRIVILEGES;" | mysql -u root -p$rootpass
 echo "New MySQL database is successfully created"
 # Download, unpack and configure WordPress
-read -r -p "Enter your WordPress URL? [e.g. mywebsite.com]: " wpURL
-wget -q -O - "http://wordpress.org/latest.tar.gz" | tar -xzf - -C /var/www --transform s/wordpress/$wpURL/
-chown www-data: -R /var/www/$wpURL && cd /var/www/$wpURL
+wget -q -O - "http://wordpress.org/latest.tar.gz" | tar -xzf - -C /var/www --transform s/wordpress/html/
+chown www-data: -R /var/www/html && cd /var/www/html
 cp wp-config-sample.php wp-config.php
 chmod 640 wp-config.php
 mkdir uploads
 sed -i "s/database_name_here/$dbname/;s/username_here/$dbuser/;s/password_here/$userpass/" wp-config.php
 # Create Apache virtual host
 echo "
-ServerName $wpURL
-ServerAlias www.$wpURL
-DocumentRoot /var/www/$wpURL
+ServerName html
+ServerAlias www.html
+DocumentRoot /var/www/html
 DirectoryIndex index.php
 Options FollowSymLinks
 AllowOverride All
 ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
-" > /etc/apache2/sites-available/$wpURL
+" > /etc/apache2/sites-available/html
 # Enable the site
-a2ensite $wpURL
+a2ensite html
 service apache2 restart
 # Output
-WPVER=$(grep "wp_version = " /var/www/$wpURL/wp-includes/version.php |awk -F\' '{print $2}')
+WPVER=$(grep "wp_version = " /var/www/html/wp-includes/version.php |awk -F\' '{print $2}')
 echo -e "\nWordPress version $WPVER is successfully installed!"
-echo -en "\aPlease go to http://$wpURL and finish the installation\n"
