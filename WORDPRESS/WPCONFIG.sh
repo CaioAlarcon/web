@@ -31,6 +31,8 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 " > /etc/apache2/sites-available/html
 # Enable the site
 a2ensite html
+chown www-data:www-data /var/www/html
+chmod -R  777 /var/www/html
 service apache2 restart
 # Output
 WPVER=$(grep "wp_version = " /var/www/html/wp-includes/version.php |awk -F\' '{print $2}')
