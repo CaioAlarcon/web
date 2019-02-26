@@ -29,7 +29,7 @@ Options FollowSymLinks
 AllowOverride All
 ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
-" > /etc/apache2/sites-available/$wpURL
+" > /etc/apache2/sites-available/$wpURL.conf
 # Enable the site
 a2ensite $wpURL
 service apache2 restart
