@@ -16,7 +16,7 @@ read -r -p "Enter your WordPress URL? [e.g. mywebsite.com]: " wpURL
 wget -q -O - "http://wordpress.org/latest.tar.gz" | tar -xzf - -C /var/www --transform s/wordpress/$wpURL/
 chown www-data: -R /var/www/$wpURL && cd /var/www/$wpURL
 cp wp-config-sample.php wp-config.php
-chmod 640 wp-config.php
+chmod 755 wp-config.php
 mkdir uploads
 sed -i "s/database_name_here/$dbname/;s/username_here/$dbuser/;s/password_here/$userpass/" wp-config.php
 # Create Apache virtual host
